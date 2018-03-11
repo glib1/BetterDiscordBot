@@ -64,7 +64,7 @@ client.on('message', msg => {
 	let contaisnCuss = containsCusswords(msg);
 	if (contaisnCuss){
 		msg.delete();
-		msg.author.send("Any sort of vulgar, gruesome, or inappropriate language is not allowed on " + msg.channel.guild.name + ".");
+		msg.author.send("Any sort of vulgar, gruesome, or inappropriate language is not allowed on " + msg.channel.guild.name + ".").catch();
 	}
   }
   }
@@ -101,12 +101,12 @@ client.on('message', msg => {
 						chanelTypeCorrect = true;
 						if (cmd[1]["isAdmin"] == "true"){
 							if (isSenderAdmin){
-								cmd[2](msg);
+								cmd[2](msg,prefix);
 							}else{
 								msg.channel.send("Excuse me! You have to be an administrator to perform " + cmd[0] +"!")
 							}
 						}else{
-							cmd[2](msg);
+							cmd[2](msg,prefix);
 						}
 					}
 				})
