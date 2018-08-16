@@ -65,9 +65,36 @@ function(msg,prefix){
 	"usage": "ban @user reason"
 }),
 function(msg,prefix){
+	const users = msg.mentions.users;
+	let removefirst = eval(prefix.length+"+4");
+	let remove = 0;
+	users.forEach(function(user){
+		remove = eval(user.username.length+"+6");
+		let reason = msg.toString().substr(eval(removefirst+"+"+remove))
+		msg.channel.send(reason);
+		msg.channel.guild.ban(user.id,reason).then(function(){msg.channel.send(user.username + " was banned from " + msg.channel.guild.name)}).catch(function(err){msg.channel.send(err)})
+	})
+}
+],
+
+[
+
+'kick',
+({
+    "isAdmin": "false",
+    "chanelRequirement": ["text"],
+	"permissons": ["idk"],
+	"description": "Kicks a user from the guild",
+	"usage": "kick @user reason"
+}),
+function(msg,prefix){
 	
 }
 ],
+
+
+
+
 [
 'help',
 ({
@@ -89,4 +116,10 @@ function(msg,prefix){
 ]
 
 ]
-exports.commands = commands;
+exports.commands = function (ret){ 
+ret(commands);
+};
+
+exports.noPrefix = function(msg){
+	msg.channel.send("Please set the server's prefix by saying: !setPrefix prefix")
+}

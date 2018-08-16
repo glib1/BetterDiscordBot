@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const commandMod = require("./commands.js");
 var fs = require("fs");
-const token = "";
+var badWords = ['fuck','f uck','fck', 'f u c k','dick','d ick', 'd i c k', 'ass', 'a s s', 'a ss', '@ss','bitch','b itch','b i t c h','hitler did nothing wrong', 'hitler', 'bush did 9/11', 'bush did 911', 'fag', 'faggot', 'kys', 'kill your self'];
+const token = "NDIyMDYzMjcwNjMxODMzNjAx.DYWUzw.KIXhTu8WhXNnC3MJfk-iR_D_T9E";
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -22,6 +24,20 @@ function getServersPrefix(gid){
 	return "!";
 }
 
+function isServerCussing(gid){
+	return true;
+}
+
+function containsCusswords(str){
+	var bad = false;
+	var str = str.toString();
+	badWords.forEach(function(cuss){
+		if (str.includes(cuss)){
+			bad=true;
+		}
+	})
+	return bad;
+}
 
 client.on('guildCreate',guild =>{
 	var gid = guild.id;
@@ -29,6 +45,7 @@ client.on('guildCreate',guild =>{
 	guild.createRole({name: 'BetterDiscord Bot Managers',}).then(role => {
 		guild.owner.addRole(role.id);
 	})
+	
 })
 client.on('guildDelete',guild =>{
 	var gid = guild.id;
@@ -44,8 +61,14 @@ client.on('message', msg => {
   let prefix = getServersPrefix(msg.channel.id);
   if (msg.channel.type == "text"){
   let guildId = msg.guild.id;
-  }else{
-      guildId = "Undecirpahble";	  
+  const christanFrindley = isServerCussing(guildId);
+  if (christanFrindley){
+	let contaisnCuss = containsCusswords(msg);
+	if (contaisnCuss){
+		msg.delete();
+		msg.author.send("Any sort of vulgar, gruesome, or inappropriate language is not allowed on " + msg.channel.guild.name + ".").catch();
+	}
+  }
   }
   
   function isSenderAdmin(){
@@ -60,12 +83,16 @@ client.on('message', msg => {
   }
   
   let content = msg.content;
+  let commands;
+  commandMod.commands(function(cmds){
+	commands = cmds;  
+  })
   
   if (prefix === "unknown"){
 	  msg.channel.send("test");
+  }else if (prefix == "None"){
+	  commands.noPrefix(msg);
   }else{
-	var commands = require("./commands.js").commands
-	
 	commands.forEach(function(cmd){
 		if (content.toLowerCase().startsWith(prefix + cmd[0])){
 			amIn = 0;
