@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const commandMod = require("./commands.js");
 var fs = require("fs");
-var badWords = ['fuck','f uck','fck', 'f u c k','dick','d ick', 'd i c k', 'ass', 'a s s', 'a ss', '@ss','bitch','b itch','b i t c h','hitler did nothing wrong', 'hitler', 'bush did 9/11', 'bush did 911', 'fag', 'faggot', 'kys', 'kill your self'];
+var badWords = ['matthew sucks'];
 const token = "NDIyMDYzMjcwNjMxODMzNjAx.DYWUzw.KIXhTu8WhXNnC3MJfk-iR_D_T9E";
 
 client.on('ready', () => {
