@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commandMod = require("./commands.js");
 var fs = require("fs");
 var badWords = ['matthew sucks'];
-const token = "NDIyMDYzMjcwNjMxODMzNjAx.DYWUzw.KIXhTu8WhXNnC3MJfk-iR_D_T9E";
+const token = "NjEwMTc4NTkzMzk3NTM4ODU2.XVBfKw.AcZCIhvHcYitQQbV5-EuBJ-Va4k";
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
